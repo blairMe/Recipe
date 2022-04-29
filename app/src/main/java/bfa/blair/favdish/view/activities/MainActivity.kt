@@ -1,4 +1,4 @@
-package bfa.blair.favdish
+package bfa.blair.favdish.view.activities
 
 import android.os.Bundle
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -7,6 +7,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import bfa.blair.favdish.R
 import bfa.blair.favdish.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
