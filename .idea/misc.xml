@@ -4,6 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="app/src/main/res/drawable/ic_add.xml" value="0.1795" />
+        <entry key="app/src/main/res/layout/activity_add_update_dish.xml" value="0.1693840579710145" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.2" />
         <entry key="app/src/main/res/layout/activity_splash.xml" value="0.19375" />
         <entry key="app/src/main/res/menu/menu_all_dishes.xml" value="0.19375" />
