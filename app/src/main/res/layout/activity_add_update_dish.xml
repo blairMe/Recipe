@@ -43,7 +43,7 @@
                     android:id="@+id/iv_dish_image"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@color/dish_image_background"
+                    android:background="@color/dish_image_backgroun"
                     android:contentDescription="@string/image_contentDescription"
                     android:scaleType="fitXY" />
 
