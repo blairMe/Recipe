@@ -29,7 +29,8 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintVertical_chainStyle="spread_inside">
+            app:layout_contraintVertical_chainStyle="spread_inside"
+            >
 
             <FrameLayout
                 android:id="@+id/fl_select_image"
@@ -43,7 +44,7 @@
                     android:id="@+id/iv_dish_image"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-
+                    android:background="@color/secondary_light_color"
                     android:contentDescription="@string/image_contentDescription"
                     android:scaleType="fitXY" />
 
