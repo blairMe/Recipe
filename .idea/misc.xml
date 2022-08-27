@@ -9,6 +9,8 @@
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.2" />
         <entry key="app/src/main/res/layout/activity_splash.xml" value="0.19375" />
         <entry key="app/src/main/res/layout/dialog_custom_image_selection.xml" value="0.1598731884057971" />
+        <entry key="app/src/main/res/layout/fragment_all_dishes.xml" value="0.1598731884057971" />
+        <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.19010416666666666" />
         <entry key="app/src/main/res/menu/menu_all_dishes.xml" value="0.19375" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.1245" />
