@@ -15,7 +15,6 @@
         android:id="@+id/navigation_dashboard"
         android:name="bfa.blair.favdish.view.fragments.DashboardFragment"
         android:label="@string/title_dashboard"
-
         tools:layout="@layout/fragment_dashboard" />
 
     <fragment
