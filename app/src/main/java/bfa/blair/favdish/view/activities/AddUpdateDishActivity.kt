@@ -32,6 +32,7 @@ class AddUpdateDishActivity : AppCompatActivity(), View.OnClickListener {
                 R.id.iv_add_dish_image -> {
                     Toast.makeText(this, "You have clicked on the imageview", Toast.LENGTH_SHORT).show()
                     return
+                    //Comment
                 }
             }
         }
