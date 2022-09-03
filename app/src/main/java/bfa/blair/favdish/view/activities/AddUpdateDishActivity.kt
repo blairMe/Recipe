@@ -9,6 +9,17 @@ import androidx.appcompat.widget.Toolbar
 import bfa.blair.favdish.R
 import bfa.blair.favdish.databinding.ActivityAddUpdateDishBinding
 import bfa.blair.favdish.databinding.DialogCustomImageSelectionBinding
+import com.karumi.dexter.Dexter
+import android.Manifest
+import android.app.AlertDialog
+import android.content.ActivityNotFoundException
+import android.content.Intent
+import android.net.Uri
+import android.provider.Settings
+import com.karumi.dexter.MultiplePermissionsReport
+import com.karumi.dexter.PermissionToken
+import com.karumi.dexter.listener.PermissionRequest
+import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 
 class AddUpdateDishActivity : AppCompatActivity(), View.OnClickListener {
 
@@ -45,16 +56,74 @@ class AddUpdateDishActivity : AppCompatActivity(), View.OnClickListener {
         dialog.setContentView(binding.root)
 
         binding.tvCamera.setOnClickListener {
-            Toast.makeText(this, "Camera Clicked", Toast.LENGTH_SHORT).show()
+            Dexter.withContext(this).withPermissions(
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.CAMERA
+            ).withListener(object : MultiplePermissionsListener {
+                override fun onPermissionsChecked(report: MultiplePermissionsReport?) {
+                    if(report!!.areAllPermissionsGranted()) {
+                        Toast.makeText(this@AddUpdateDishActivity, "You have granted the camera permission",
+                            Toast.LENGTH_SHORT).show()
+                    }
+                }
+
+                override fun onPermissionRationaleShouldBeShown(
+                    permissions: MutableList<PermissionRequest>?,
+                    token: PermissionToken?
+                ) {
+                    showRationalDialogForPermissions()
+                }
+            }
+
+            ).onSameThread().check()
             dialog.dismiss()
         }
 
         binding.tvGallery.setOnClickListener {
-            Toast.makeText(this, "Gallery Clicked", Toast.LENGTH_SHORT).show()
+            Dexter.withContext(this).withPermissions(
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+            ).withListener(object : MultiplePermissionsListener {
+                override fun onPermissionsChecked(report: MultiplePermissionsReport?) {
+                    if(report!!.areAllPermissionsGranted()) {
+                        Toast.makeText(this@AddUpdateDishActivity, "You have granted the gallery permission",
+                            Toast.LENGTH_SHORT).show()
+                    }
+                }
+
+                override fun onPermissionRationaleShouldBeShown(
+                    permissions: MutableList<PermissionRequest>?,
+                    token: PermissionToken?
+                ) {
+                    showRationalDialogForPermissions()
+                }
+            }
+
+            ).onSameThread().check()
             dialog.dismiss()
         }
 
         dialog.show()
+    }
+
+    private fun showRationalDialogForPermissions() {
+        AlertDialog.Builder(this).setMessage("It seems you haven't enabled permissions, it can be enabled in settings.")
+            .setPositiveButton("GO TO SETTINGS")
+            {_,_ ->
+                try {
+                    val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+                    val uri = Uri.fromParts("package", packageName, null)
+                    intent.data = uri
+                    startActivity(intent)
+                } catch(e : ActivityNotFoundException) {
+                    e.printStackTrace()
+                }
+            }
+            .setNegativeButton("CANCEL") {dialog, _ ->
+                dialog.dismiss()
+            }
+            .show()
     }
 
 }
