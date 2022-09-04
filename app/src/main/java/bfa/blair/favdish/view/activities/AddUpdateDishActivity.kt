@@ -18,8 +18,11 @@ import android.net.Uri
 import android.provider.Settings
 import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
+import com.karumi.dexter.listener.PermissionDeniedResponse
+import com.karumi.dexter.listener.PermissionGrantedResponse
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
+import com.karumi.dexter.listener.single.PermissionListener
 
 class AddUpdateDishActivity : AppCompatActivity(), View.OnClickListener {
 
@@ -58,7 +61,7 @@ class AddUpdateDishActivity : AppCompatActivity(), View.OnClickListener {
         binding.tvCamera.setOnClickListener {
             Dexter.withContext(this).withPermissions(
                 Manifest.permission.READ_EXTERNAL_STORAGE,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                //Manifest.permission.WRITE_EXTERNAL_STORAGE,
                 Manifest.permission.CAMERA
             ).withListener(object : MultiplePermissionsListener {
                 override fun onPermissionsChecked(report: MultiplePermissionsReport?) {
@@ -81,20 +84,23 @@ class AddUpdateDishActivity : AppCompatActivity(), View.OnClickListener {
         }
 
         binding.tvGallery.setOnClickListener {
-            Dexter.withContext(this).withPermissions(
+            Dexter.withContext(this).withPermission(
                 Manifest.permission.READ_EXTERNAL_STORAGE,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE
-            ).withListener(object : MultiplePermissionsListener {
-                override fun onPermissionsChecked(report: MultiplePermissionsReport?) {
-                    if(report!!.areAllPermissionsGranted()) {
+                //Manifest.permission.WRITE_EXTERNAL_STORAGE
+            ).withListener(object : PermissionListener {
+                override fun onPermissionGranted(p0: PermissionGrantedResponse?) {
                         Toast.makeText(this@AddUpdateDishActivity, "You have granted the gallery permission",
                             Toast.LENGTH_SHORT).show()
-                    }
+                }
+
+                override fun onPermissionDenied(p0: PermissionDeniedResponse?) {
+                    Toast.makeText(this@AddUpdateDishActivity, "You have denied the gallery permission",
+                        Toast.LENGTH_SHORT).show()
                 }
 
                 override fun onPermissionRationaleShouldBeShown(
-                    permissions: MutableList<PermissionRequest>?,
-                    token: PermissionToken?
+                    p0: PermissionRequest?,
+                    p1: PermissionToken?
                 ) {
                     showRationalDialogForPermissions()
                 }
