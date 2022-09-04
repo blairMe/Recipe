@@ -14,8 +14,11 @@ import android.Manifest
 import android.app.AlertDialog
 import android.content.ActivityNotFoundException
 import android.content.Intent
+import android.graphics.Bitmap
 import android.net.Uri
+import android.provider.MediaStore
 import android.provider.Settings
+import androidx.core.content.ContextCompat
 import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.PermissionDeniedResponse
@@ -66,9 +69,9 @@ class AddUpdateDishActivity : AppCompatActivity(), View.OnClickListener {
             ).withListener(object : MultiplePermissionsListener {
                 override fun onPermissionsChecked(report: MultiplePermissionsReport?) {
                     report?.let{
-                        if(report!!.areAllPermissionsGranted()) {
-                            Toast.makeText(this@AddUpdateDishActivity, "You have granted the camera permission",
-                                Toast.LENGTH_SHORT).show()
+                        if(report.areAllPermissionsGranted()) {
+                            val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                            startActivityForResult(intent, CAMERA)
                         }
                     }
                 }
@@ -115,6 +118,20 @@ class AddUpdateDishActivity : AppCompatActivity(), View.OnClickListener {
         dialog.show()
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(requestCode == RESULT_OK) {
+              if(requestCode == CAMERA) {
+                    data?.let {
+                        val thumbnail : Bitmap = data.extras!!.get("data") as Bitmap
+                        mBinding.ivDishImage.setImageBitmap(thumbnail)
+
+                        mBinding.ivAddDishImage.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_vector_edit))
+              } }
+
+        }
+    }
+
     private fun showRationalDialogForPermissions() {
         AlertDialog.Builder(this).setMessage("It seems you haven't enabled permissions, it can be enabled in settings.")
             .setPositiveButton("GO TO SETTINGS")
@@ -132,6 +149,10 @@ class AddUpdateDishActivity : AppCompatActivity(), View.OnClickListener {
                 dialog.dismiss()
             }
             .show()
+    }
+
+    companion object{
+        private const val CAMERA = 1
     }
 
 }
