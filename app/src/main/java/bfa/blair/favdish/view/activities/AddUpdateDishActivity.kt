@@ -65,9 +65,11 @@ class AddUpdateDishActivity : AppCompatActivity(), View.OnClickListener {
                 Manifest.permission.CAMERA
             ).withListener(object : MultiplePermissionsListener {
                 override fun onPermissionsChecked(report: MultiplePermissionsReport?) {
-                    if(report!!.areAllPermissionsGranted()) {
-                        Toast.makeText(this@AddUpdateDishActivity, "You have granted the camera permission",
-                            Toast.LENGTH_SHORT).show()
+                    report?.let{
+                        if(report!!.areAllPermissionsGranted()) {
+                            Toast.makeText(this@AddUpdateDishActivity, "You have granted the camera permission",
+                                Toast.LENGTH_SHORT).show()
+                        }
                     }
                 }
 
