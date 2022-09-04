@@ -11,6 +11,7 @@ import bfa.blair.favdish.databinding.ActivityAddUpdateDishBinding
 import bfa.blair.favdish.databinding.DialogCustomImageSelectionBinding
 import com.karumi.dexter.Dexter
 import android.Manifest
+import android.app.Activity
 import android.app.AlertDialog
 import android.content.ActivityNotFoundException
 import android.content.Intent
@@ -120,15 +121,14 @@ class AddUpdateDishActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if(requestCode == RESULT_OK) {
+        if(resultCode == Activity.RESULT_OK) {
               if(requestCode == CAMERA) {
-                    data?.let {
+                    data?.extras?.let {
                         val thumbnail : Bitmap = data.extras!!.get("data") as Bitmap
                         mBinding.ivDishImage.setImageBitmap(thumbnail)
 
                         mBinding.ivAddDishImage.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_vector_edit))
               } }
-
         }
     }
 
