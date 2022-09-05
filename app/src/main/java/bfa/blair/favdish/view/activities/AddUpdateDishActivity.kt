@@ -128,9 +128,12 @@ class AddUpdateDishActivity : AppCompatActivity(), View.OnClickListener {
                         mBinding.ivDishImage.setImageBitmap(thumbnail)
 
                         mBinding.ivAddDishImage.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_vector_edit))
-              } }
+              }
+              }
         }
     }
+
+    //Comment
 
     private fun showRationalDialogForPermissions() {
         AlertDialog.Builder(this).setMessage("It seems you haven't enabled permissions, it can be enabled in settings.")
