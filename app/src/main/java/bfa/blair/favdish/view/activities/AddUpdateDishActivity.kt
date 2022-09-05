@@ -19,6 +19,7 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.provider.MediaStore
 import android.provider.Settings
+import android.util.Log
 import androidx.core.content.ContextCompat
 import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
@@ -95,8 +96,9 @@ class AddUpdateDishActivity : AppCompatActivity(), View.OnClickListener {
                 //Manifest.permission.WRITE_EXTERNAL_STORAGE
             ).withListener(object : PermissionListener {
                 override fun onPermissionGranted(p0: PermissionGrantedResponse?) {
-                        Toast.makeText(this@AddUpdateDishActivity, "You have granted the gallery permission",
-                            Toast.LENGTH_SHORT).show()
+                        val galleryIntent = Intent(Intent.ACTION_PICK,
+                                MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+                        startActivityForResult(galleryIntent, GALLERY)
                 }
 
                 override fun onPermissionDenied(p0: PermissionDeniedResponse?) {
@@ -122,18 +124,25 @@ class AddUpdateDishActivity : AppCompatActivity(), View.OnClickListener {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if(resultCode == Activity.RESULT_OK) {
-              if(requestCode == CAMERA) {
-                    data?.extras?.let {
-                        val thumbnail : Bitmap = data.extras!!.get("data") as Bitmap
-                        mBinding.ivDishImage.setImageBitmap(thumbnail)
+            if(requestCode == CAMERA) {
+                data?.extras?.let {
+                    val thumbnail : Bitmap = data.extras!!.get("data") as Bitmap
+                    mBinding.ivDishImage.setImageBitmap(thumbnail)
 
-                        mBinding.ivAddDishImage.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_vector_edit))
-              }
-              }
+                    mBinding.ivAddDishImage.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_vector_edit))
+              } }
+            if(requestCode == GALLERY) {
+                data?.let {
+                    val selectedPhotoUri = data.data
+                    mBinding.ivDishImage.setImageURI(selectedPhotoUri)
+
+                    mBinding.ivAddDishImage.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_vector_edit))
+                }
+            }
+        } else if(resultCode == Activity.RESULT_CANCELED) {
+            Log.e("Cancelled", "User cancelled image selection.")
         }
     }
-
-    //Comment
 
     private fun showRationalDialogForPermissions() {
         AlertDialog.Builder(this).setMessage("It seems you haven't enabled permissions, it can be enabled in settings.")
@@ -156,6 +165,7 @@ class AddUpdateDishActivity : AppCompatActivity(), View.OnClickListener {
 
     companion object{
         private const val CAMERA = 1
+        private const val GALLERY = 2
     }
 
 }
