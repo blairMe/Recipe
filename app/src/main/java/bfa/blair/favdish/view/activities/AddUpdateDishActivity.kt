@@ -17,12 +17,19 @@ import android.content.ActivityNotFoundException
 import android.content.ContextWrapper
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.provider.MediaStore
 import android.provider.Settings
 import android.util.Log
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.toBitmap
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
 import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.PermissionDeniedResponse
@@ -144,6 +151,7 @@ class AddUpdateDishActivity : AppCompatActivity(), View.OnClickListener {
                         .into(mBinding.ivDishImage)
 
                     mImagePath = saveImageToInternalStorage(thumbnail)
+                    Log.e("Image Path", mImagePath)
 
                     mBinding.ivAddDishImage.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_vector_edit))
               } }
@@ -154,6 +162,35 @@ class AddUpdateDishActivity : AppCompatActivity(), View.OnClickListener {
                     Glide.with(this)
                         .load(selectedPhotoUri)
                         .centerCrop()
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .listener(object: RequestListener<Drawable>{
+                            override fun onLoadFailed(
+                                e: GlideException?,
+                                model: Any?,
+                                target: Target<Drawable>?,
+                                isFirstResource: Boolean
+                            ): Boolean {
+                                Log.e("TAG", "Error Loading Image", e)
+                                return false
+                            }
+
+                            override fun onResourceReady(
+                                resource: Drawable?,
+                                model: Any?,
+                                target: Target<Drawable>?,
+                                dataSource: DataSource?,
+                                isFirstResource: Boolean
+                            ): Boolean {
+                                resource?.let{
+                                    val bitmap : Bitmap = resource.toBitmap()
+                                    mImagePath = saveImageToInternalStorage(bitmap)
+
+                                    Log.e("Image Path", mImagePath)
+                                }
+                                return false
+                            }
+
+                        })
                         .into(mBinding.ivDishImage)
 
                     mBinding.ivAddDishImage.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_vector_edit))
@@ -161,7 +198,6 @@ class AddUpdateDishActivity : AppCompatActivity(), View.OnClickListener {
             }
         } else if(resultCode == Activity.RESULT_CANCELED) {
             Log.e("Cancelled", "User cancelled image selection.")
-            //Comment
         }
     }
 
