@@ -14,6 +14,7 @@ import android.Manifest
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.ActivityNotFoundException
+import android.content.ContextWrapper
 import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
@@ -29,10 +30,18 @@ import com.karumi.dexter.listener.PermissionGrantedResponse
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import com.karumi.dexter.listener.single.PermissionListener
+import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
+import java.io.OutputStream
+import java.util.*
 
 class AddUpdateDishActivity : AppCompatActivity(), View.OnClickListener {
 
     private lateinit var mBinding : ActivityAddUpdateDishBinding
+
+    private var mImagePath = ""
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mBinding = ActivityAddUpdateDishBinding.inflate(layoutInflater)
@@ -134,6 +143,8 @@ class AddUpdateDishActivity : AppCompatActivity(), View.OnClickListener {
                         .centerCrop()
                         .into(mBinding.ivDishImage)
 
+                    mImagePath = saveImageToInternalStorage(thumbnail)
+
                     mBinding.ivAddDishImage.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_vector_edit))
               } }
             if(requestCode == GALLERY) {
@@ -150,6 +161,7 @@ class AddUpdateDishActivity : AppCompatActivity(), View.OnClickListener {
             }
         } else if(resultCode == Activity.RESULT_CANCELED) {
             Log.e("Cancelled", "User cancelled image selection.")
+            //Comment
         }
     }
 
@@ -172,9 +184,29 @@ class AddUpdateDishActivity : AppCompatActivity(), View.OnClickListener {
             .show()
     }
 
+    private fun saveImageToInternalStorage(bitmap: Bitmap) : String {
+        val wrapper = ContextWrapper(applicationContext)
+
+        var file = wrapper.getDir(IMAGE_DIRECTORY, Activity.MODE_PRIVATE)
+        file = File(file, "${UUID.randomUUID()}.jpg")
+
+        try {
+            val stream : OutputStream = FileOutputStream(file)
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream)
+            stream.flush()
+            stream.close()
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+
+        return  file.absolutePath
+    }
+
     companion object{
         private const val CAMERA = 1
         private const val GALLERY = 2
+
+        private const val IMAGE_DIRECTORY = "FavDishImages"
     }
 
 }
