@@ -238,6 +238,10 @@ class AddUpdateDishActivity : AppCompatActivity(), View.OnClickListener {
         return  file.absolutePath
     }
 
+    fun customItemsSelection(title: String, itemsList: List<String>, selection: String) {
+
+    }
+
     companion object{
         private const val CAMERA = 1
         private const val GALLERY = 2
