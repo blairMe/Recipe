@@ -239,11 +239,12 @@ class AddUpdateDishActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     fun customItemsSelection(title: String, itemsList: List<String>, selection: String) {
-
+        //Comment
     }
 
     companion object{
         private const val CAMERA = 1
+
         private const val GALLERY = 2
 
         private const val IMAGE_DIRECTORY = "FavDishImages"
