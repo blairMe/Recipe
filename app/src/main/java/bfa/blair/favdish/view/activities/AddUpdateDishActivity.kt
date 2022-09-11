@@ -239,7 +239,7 @@ class AddUpdateDishActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     fun customItemsSelection(title: String, itemsList: List<String>, selection: String) {
-        //Comment
+
     }
 
     companion object{
