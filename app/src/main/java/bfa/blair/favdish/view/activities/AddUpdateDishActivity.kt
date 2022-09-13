@@ -24,6 +24,8 @@ import android.provider.Settings
 import android.util.Log
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toBitmap
+import androidx.recyclerview.widget.LinearLayoutManager
+import bfa.blair.favdish.databinding.CustomDialogListBinding
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -239,7 +241,13 @@ class AddUpdateDishActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     fun customItemsSelection(title: String, itemsList: List<String>, selection: String) {
+        val customListDialog = Dialog(this)
+        val binding : CustomDialogListBinding = CustomDialogListBinding.inflate(layoutInflater)
 
+        customListDialog.setContentView(binding.root)
+        binding.tvTitle.text = title
+
+        binding.rvList.layoutManager = LinearLayoutManager(this)
     }
 
     companion object{
