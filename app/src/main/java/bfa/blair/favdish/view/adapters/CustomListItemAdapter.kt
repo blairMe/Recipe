@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import bfa.blair.favdish.databinding.ItemCustomListBinding
+import bfa.blair.favdish.view.activities.AddUpdateDishActivity
 
 class CustomListItemAdapter(private val activity: Activity,
                             private val listItems : List<String>,
@@ -25,6 +26,12 @@ class CustomListItemAdapter(private val activity: Activity,
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val items = listItems[position]
         holder.tvText.text = items
+
+        holder.itemView.setOnClickListener {
+            if(activity is AddUpdateDishActivity) {
+                activity.selectedListItem(items, selection)
+            }
+        }
     }
 
     override fun getItemCount(): Int {

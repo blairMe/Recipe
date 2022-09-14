@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
-import androidx.appcompat.widget.Toolbar
 import bfa.blair.favdish.R
 import bfa.blair.favdish.databinding.ActivityAddUpdateDishBinding
 import bfa.blair.favdish.databinding.DialogCustomImageSelectionBinding
@@ -50,8 +49,9 @@ import java.util.*
 class AddUpdateDishActivity : AppCompatActivity(), View.OnClickListener {
 
     private lateinit var mBinding : ActivityAddUpdateDishBinding
-
     private var mImagePath = ""
+
+    private lateinit var mCustomListDialog: Dialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -76,7 +76,7 @@ class AddUpdateDishActivity : AppCompatActivity(), View.OnClickListener {
         if(v != null) {
             when(v.id) {
                 R.id.iv_add_dish_image -> {
-                    customimageSelectionDialog()
+                    customImageSelectionDialog()
                     return
                 }
                 R.id.et_type -> {
@@ -91,14 +91,24 @@ class AddUpdateDishActivity : AppCompatActivity(), View.OnClickListener {
                     customItemsListDialog(resources.getString(R.string.lbl_cooking_time_in_minutes),
                         Constants.dishCookTime(), Constants.DISH_COOKING_TIME)
                 }
+
+                //Button
+                R.id.btn_add_dish -> {
+                    val title = mBinding.etTitle.text.toString().trim() { it <= ' ' }
+                    val type = mBinding.etType.text.toString().trim() { it <= ' ' }
+                    val category = mBinding.etCategory.text.toString().trim() { it <= ' ' }
+                    val ingredients = mBinding.etIngredients.text.toString().trim() { it <= ' ' }
+                    val cookingTimeInMinutes = mBinding.etCookingTime.text.toString().trim() { it <= ' ' }
+                    val cookingDirection = mBinding.etDirectionToCook.text.toString().trim() { it <= ' ' }
+                }
             }
         }
     }
 
-    private fun customimageSelectionDialog() {
-        val dialog = Dialog(this)
+    private fun customImageSelectionDialog() {
+        val mCustomListDialog = Dialog(this)
         val binding : DialogCustomImageSelectionBinding = DialogCustomImageSelectionBinding.inflate(layoutInflater)
-        dialog.setContentView(binding.root)
+        mCustomListDialog.setContentView(binding.root)
 
         binding.tvCamera.setOnClickListener {
             Dexter.withContext(this).withPermissions(
@@ -124,7 +134,7 @@ class AddUpdateDishActivity : AppCompatActivity(), View.OnClickListener {
             }
 
             ).onSameThread().check()
-            dialog.dismiss()
+            mCustomListDialog.dismiss()
         }
 
         binding.tvGallery.setOnClickListener {
@@ -152,10 +162,27 @@ class AddUpdateDishActivity : AppCompatActivity(), View.OnClickListener {
             }
 
             ).onSameThread().check()
-            dialog.dismiss()
+            mCustomListDialog.dismiss()
         }
 
-        dialog.show()
+        mCustomListDialog.show()
+    }
+
+    fun selectedListItem(item: String, selection: String) {
+        when(selection) {
+            Constants.DISH_TYPE -> {
+                mCustomListDialog.dismiss()
+                mBinding.etType.setText(item)
+            }
+            Constants.DISH_CATEGORY -> {
+                mCustomListDialog.dismiss()
+                mBinding.etCategory.setText(item)
+            }
+            else -> {
+                mCustomListDialog.dismiss()
+                mBinding.etCookingTime.setText(item)
+            }
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -282,3 +309,4 @@ class AddUpdateDishActivity : AppCompatActivity(), View.OnClickListener {
     }
 
 }
+
