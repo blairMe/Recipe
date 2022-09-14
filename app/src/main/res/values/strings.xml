@@ -19,4 +19,7 @@
     <string name="lbl_camera">Camera</string>
     <string name="lbl_gallery">Gallery</string>
 
+    <string name="title_select_dish_type">Select Dish Type</string>
+    <string name="title_select_dish_category">Select Dish Category</string>
+    <string name="title_select_dish_cooking_time">Select Cooking Time in Minutes</string>
 </resources>

@@ -14,7 +14,7 @@
         android:padding="@dimen/_10sdp"
         android:textColor="@color/grey_900"
         android:textSize="@dimen/_16sdp"
-        app:text="Item Value" />
+        android:text="Item Value" />
 
     <View
         android:layout_width="match_parent"

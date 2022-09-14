@@ -14,7 +14,7 @@
         android:textColor="@color/grey_900"
         android:textSize="@dimen/_15sdp"
         android:textStyle="bold"
-        app:text="Dialog Title" />
+        android:text="Dialog Title" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_list"
