@@ -345,6 +345,8 @@ class AddUpdateDishActivity : AppCompatActivity(), View.OnClickListener {
 
     }
 
+    //Comment
+
     companion object{
         private const val CAMERA = 1
 
