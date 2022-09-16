@@ -8,4 +8,5 @@ class FavDishRepository(private val favDishDao: FavDishDao) {
     suspend fun insertFavDishData(favDish: FavDish) {
         favDishDao.insertFavDishDetails(favDish)
     }
+    //Using coroutine
 }
