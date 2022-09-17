@@ -22,12 +22,14 @@ import android.provider.MediaStore
 import android.provider.Settings
 import android.text.TextUtils
 import android.util.Log
+import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toBitmap
 import androidx.recyclerview.widget.LinearLayoutManager
 import bfa.blair.favdish.databinding.CustomDialogListBinding
 import bfa.blair.favdish.utils.Constants
 import bfa.blair.favdish.view.adapters.CustomListItemAdapter
+import bfa.blair.favdish.viewmodel.FavDishViewModel
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -53,6 +55,10 @@ class AddUpdateDishActivity : AppCompatActivity(), View.OnClickListener {
     private var mImagePath = ""
 
     private lateinit var mCustomListDialog: Dialog
+
+    private val mFavDishViewModel : FavDishViewModel by viewModels {
+
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -344,8 +350,6 @@ class AddUpdateDishActivity : AppCompatActivity(), View.OnClickListener {
         mCustomListDialog.show()
 
     }
-
-    //Comment
 
     companion object{
         private const val CAMERA = 1
