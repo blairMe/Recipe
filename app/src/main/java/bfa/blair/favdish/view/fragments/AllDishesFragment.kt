@@ -2,18 +2,27 @@ package bfa.blair.favdish.view.fragments
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import bfa.blair.favdish.R
+import bfa.blair.favdish.application.FavDishApplication
 import bfa.blair.favdish.databinding.FragmentAllDishesBinding
 import bfa.blair.favdish.view.activities.AddUpdateDishActivity
+import bfa.blair.favdish.viewmodel.FavDishViewModel
+import bfa.blair.favdish.viewmodel.FavDishViewModelFactory
 import bfa.blair.favdish.viewmodel.HomeViewModel
 
 class AllDishesFragment : Fragment() {
 
     private var _binding: FragmentAllDishesBinding? = null
+
+    private val mFavDishViewModel : FavDishViewModel by viewModels {
+        FavDishViewModelFactory((requireActivity().application as FavDishApplication).repository)
+    }
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -40,6 +49,19 @@ class AllDishesFragment : Fragment() {
             textView.text = it
         }
         return root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        mFavDishViewModel.allDishesList.observe(viewLifecycleOwner) {
+            dishes ->
+                dishes.let{
+                    for (item in it) {
+                        Log.i("Dish Title", "${item.id} ${item.title}")
+                    }
+                }
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
