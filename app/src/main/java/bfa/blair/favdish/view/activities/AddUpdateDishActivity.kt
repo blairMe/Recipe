@@ -26,10 +26,13 @@ import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toBitmap
 import androidx.recyclerview.widget.LinearLayoutManager
+import bfa.blair.favdish.application.FavDishApplication
 import bfa.blair.favdish.databinding.CustomDialogListBinding
+import bfa.blair.favdish.model.entities.FavDish
 import bfa.blair.favdish.utils.Constants
 import bfa.blair.favdish.view.adapters.CustomListItemAdapter
 import bfa.blair.favdish.viewmodel.FavDishViewModel
+import bfa.blair.favdish.viewmodel.FavDishViewModelFactory
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -57,7 +60,7 @@ class AddUpdateDishActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var mCustomListDialog: Dialog
 
     private val mFavDishViewModel : FavDishViewModel by viewModels {
-
+        FavDishViewModelFactory((application as FavDishApplication).repository)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -147,8 +150,24 @@ class AddUpdateDishActivity : AppCompatActivity(), View.OnClickListener {
                                 Toast.LENGTH_SHORT).show()
                         }
                         else -> {
+                            val favDishDetails : FavDish = FavDish(
+                                mImagePath,
+                                Constants.DISH_IMAGE_SOURCE_LOCAL,
+                                title,
+                                type,
+                                category,
+                                ingredients,
+                                cookingTimeInMinutes,
+                                cookingDirection,
+                                false
+                            )
+
+                            mFavDishViewModel.insert(favDishDetails)
+
                             Toast.makeText(this@AddUpdateDishActivity,
-                                    "All entries are valid", Toast.LENGTH_SHORT).show()
+                            "You successfully added your dish details", Toast.LENGTH_SHORT).show()
+                            Log.i("Insertion", "Success")
+                            finish()
                         }
                     }
                 }
