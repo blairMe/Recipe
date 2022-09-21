@@ -14,4 +14,6 @@ interface FavDishDao {
 
     @Query("SELECT * FROM FAV_DISHES_TABLE ORDER BY ID")
     fun getAllDishesList(): Flow<List<FavDish>>
+
+    //Comment
 }
