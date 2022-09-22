@@ -5,6 +5,7 @@
       <map>
         <entry key="app/src/main/res/drawable/ic_add.xml" value="0.1795" />
         <entry key="app/src/main/res/drawable/ic_add_a_photo.xml" value="0.1665" />
+        <entry key="app/src/main/res/drawable/ic_all_dishes.xml" value="0.2005" />
         <entry key="app/src/main/res/drawable/ic_vector_gallery.xml" value="0.1005" />
         <entry key="app/src/main/res/drawable/ic_vector_photo_camera.xml" value="0.1005" />
         <entry key="app/src/main/res/drawable/item_custom_list.xml" value="0.1" />
@@ -15,6 +16,7 @@
         <entry key="app/src/main/res/layout/dialog_custom_image_selection.xml" value="0.1598731884057971" />
         <entry key="app/src/main/res/layout/fragment_all_dishes.xml" value="0.1598731884057971" />
         <entry key="app/src/main/res/layout/item_custom_list.xml" value="0.1331521739130435" />
+        <entry key="app/src/main/res/layout/item_dish_layout.xml" value="0.1" />
         <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.19010416666666666" />
         <entry key="app/src/main/res/menu/menu_all_dishes.xml" value="0.19375" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1" />
