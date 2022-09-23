@@ -22,4 +22,9 @@
         android:name="bfa.blair.favdish.view.fragments.RandomDishFragment"
         android:label="@string/title_random_dish"
         tools:layout="@layout/fragment_random_dish" />
+    <fragment
+        android:id="@+id/dishDetailsFragment"
+        android:name="bfa.blair.favdish.view.fragments.DishDetailsFragment"
+        android:label="fragment_dish_details"
+        tools:layout="@layout/fragment_dish_details" />
 </navigation>
