@@ -9,7 +9,11 @@
         android:id="@+id/navigation_all_dishes"
         android:name="bfa.blair.favdish.view.fragments.AllDishesFragment"
         android:label="@string/title_all_dishes"
-        tools:layout="@layout/fragment_all_dishes" />
+        tools:layout="@layout/fragment_all_dishes" >
+        <action
+            android:id="@+id/action_navigation_all_dishes_to_dishDetailsFragment"
+            app:destination="@id/dishDetailsFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_favorite_dishes"
@@ -25,6 +29,6 @@
     <fragment
         android:id="@+id/dishDetailsFragment"
         android:name="bfa.blair.favdish.view.fragments.DishDetailsFragment"
-        android:label="fragment_dish_details"
+        android:label="@string/title_dish_details"
         tools:layout="@layout/fragment_dish_details" />
 </navigation>

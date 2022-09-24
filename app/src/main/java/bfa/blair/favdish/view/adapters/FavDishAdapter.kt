@@ -32,6 +32,12 @@ class FavDishAdapter(private val fragment: Fragment): RecyclerView.Adapter<FavDi
             .load(dish.image)
             .into(holder.ivDishImage)
         holder.tvTitle.text = dish.title
+
+        holder.itemView.setOnClickListener {
+            if(fragment is AllDishesFragment) {
+                fragment.dishDetails()
+            }
+        }
     }
 
     override fun getItemCount(): Int {
