@@ -13,7 +13,8 @@ class FavDishViewModel(private val repository: FavDishRepository) : ViewModel() 
     val allDishesList : LiveData<List<FavDish>> = repository.allDishesList.asLiveData()
 }
 
-class FavDishViewModelFactory(private val repository: FavDishRepository) : ViewModelProvider.Factory {
+class FavDishViewModelFactory(private val repository: FavDish
+Repository) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(FavDishViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")

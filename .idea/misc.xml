@@ -3,9 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/drawable/favorite_button_background.xml" value="0.2005" />
         <entry key="app/src/main/res/drawable/ic_add.xml" value="0.1795" />
         <entry key="app/src/main/res/drawable/ic_add_a_photo.xml" value="0.1665" />
         <entry key="app/src/main/res/drawable/ic_all_dishes.xml" value="0.2005" />
+        <entry key="app/src/main/res/drawable/ic_favorite_selected.xml" value="0.2005" />
         <entry key="app/src/main/res/drawable/ic_vector_gallery.xml" value="0.1005" />
         <entry key="app/src/main/res/drawable/ic_vector_photo_camera.xml" value="0.1005" />
         <entry key="app/src/main/res/drawable/item_custom_list.xml" value="0.1" />
