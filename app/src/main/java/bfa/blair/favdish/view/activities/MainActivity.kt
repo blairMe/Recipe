@@ -42,6 +42,7 @@ class MainActivity : AppCompatActivity() {
 //    override fun onSupportNavigateUp(): Boolean {
 //        return NavigationUI.navigateUp(mNavController, null)
 //    }
+
     override fun onSupportNavigateUp(): Boolean {
         super.onSupportNavigateUp()
         onBackPressed()
