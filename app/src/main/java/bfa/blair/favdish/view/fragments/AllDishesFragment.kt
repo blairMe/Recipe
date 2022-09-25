@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import bfa.blair.favdish.R
 import bfa.blair.favdish.application.FavDishApplication
 import bfa.blair.favdish.databinding.FragmentAllDishesBinding
+import bfa.blair.favdish.model.entities.FavDish
 import bfa.blair.favdish.view.activities.AddUpdateDishActivity
 import bfa.blair.favdish.view.activities.MainActivity
 import bfa.blair.favdish.view.adapters.FavDishAdapter
@@ -70,8 +71,8 @@ class AllDishesFragment : Fragment() {
         }
     }
 
-    fun dishDetails() {
-        findNavController().navigate(AllDishesFragmentDirections.actionNavigationAllDishesToDishDetailsFragment())
+    fun dishDetails(favDish: FavDish) {
+        findNavController().navigate(AllDishesFragmentDirections.actionNavigationAllDishesToDishDetailsFragment(favDish))
 
         // Hide the bottom navigation
         if(requireActivity() is MainActivity) {
