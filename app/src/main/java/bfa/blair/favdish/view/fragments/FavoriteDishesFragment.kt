@@ -9,9 +9,12 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import bfa.blair.favdish.application.FavDishApplication
 import bfa.blair.favdish.databinding.FragmentFavoriteDishesBinding
+import bfa.blair.favdish.model.entities.FavDish
+import bfa.blair.favdish.view.activities.MainActivity
 import bfa.blair.favdish.view.adapters.FavDishAdapter
 import bfa.blair.favdish.viewmodel.DashboardViewModel
 import bfa.blair.favdish.viewmodel.FavDishViewModel
@@ -61,6 +64,22 @@ class FavoriteDishesFragment : Fragment() {
                     _binding!!.tvNoFavoriteDishesAvailable.visibility = View.VISIBLE
                 }
             }
+        }
+    }
+
+    fun dishDetails(favDish: FavDish) {
+        findNavController().navigate(FavoriteDishesFragmentDirections
+            .actionNavigationFavoriteDishesToDishDetailsFragment(favDish))
+
+        if(requireActivity() is MainActivity) {
+            (activity as MainActivity?)!!.hideBottomNavigationView()
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if(requireActivity() is MainActivity) {
+            (activity as MainActivity?)!!.showBottomNavigationView()
         }
     }
 
