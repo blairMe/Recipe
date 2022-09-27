@@ -62,7 +62,9 @@ class FavDishAdapter(private val fragment: Fragment): RecyclerView.Adapter<FavDi
                     fragment.requireActivity().startActivity(intent)
 
                 } else if(it.itemId == R.id.action_delete_dish) {
-                    Log.i("Click", "You clicked on delete dish")
+                    if(fragment is AllDishesFragment) {
+                        fragment.deleteDish(dish)
+                    }
                 }
                 true
             }
