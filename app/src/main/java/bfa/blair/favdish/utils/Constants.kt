@@ -19,7 +19,7 @@ object Constants {
     const val NUMBER : String = "number"
 
     const val BASE_URL = "https://api.spoonacular.com/"
-    const val APIKEY = "acd4705bcd2946d0b97b1743b0681b7"
+    const val API_KEY_VALUE = "acd4705bcd2946d0b97b1743b0681b7"
     const val LIMIT_LICENSE_VALUE : Boolean = true
     const val TAG_VALUES : String = "vegetarian, dessert"
     const val NUMBER_VALUE : Int = 1
