@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -114,7 +115,7 @@ class AllDishesFragment : Fragment() {
         dishTypes.add(0, Constants.ALL_ITEMS)
         binding.rvList.layoutManager = LinearLayoutManager(requireActivity())
 
-        val adapter = CustomListItemAdapter(requireActivity(), dishTypes, Constants.FILTER_SELECTION)
+        val adapter = CustomListItemAdapter(requireActivity(), this@AllDishesFragment, dishTypes, Constants.FILTER_SELECTION)
         binding.rvList.adapter = adapter
         mCustomListDialog.show()
     }
@@ -150,5 +151,43 @@ class AllDishesFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    fun filterSelection(filterItemSelection : String) {
+        mCustomListDialog.dismiss()
+
+        Log.i("Filter Selection", filterItemSelection)
+
+        if(filterItemSelection == Constants.ALL_ITEMS) {
+            mFavDishViewModel.allDishesList.observe(viewLifecycleOwner) {
+                    dishes ->
+                dishes.let{
+                    if(it.isNotEmpty()) {
+                        _binding!!.rvDishesList.visibility = View.VISIBLE
+                        _binding!!.tvNoDishesAddedYet.visibility = View.GONE
+
+                        mFavDishAdapter.dishesList(it)
+                    } else {
+                        _binding!!.rvDishesList.visibility = View.GONE
+                        _binding!!.tvNoDishesAddedYet.visibility = View.VISIBLE
+                    }
+                }
+            }
+        } else {
+            mFavDishViewModel.getFilteredList(filterItemSelection).observe(viewLifecycleOwner) {
+                dishes ->
+                    dishes.let {
+                        if(it.isNotEmpty()) {
+                            _binding!!.rvDishesList.visibility = View.VISIBLE
+                            _binding!!.tvNoDishesAddedYet.visibility = View.GONE
+
+                            mFavDishAdapter.dishesList(it)
+                        } else {
+                            _binding!!.rvDishesList.visibility = View.GONE
+                            _binding!!.tvNoDishesAddedYet.visibility = View.VISIBLE
+                        }
+                    }
+            }
+        }
     }
 }
