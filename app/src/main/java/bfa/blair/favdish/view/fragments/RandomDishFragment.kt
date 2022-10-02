@@ -7,13 +7,21 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.get
 import bfa.blair.favdish.R
+import bfa.blair.favdish.application.FavDishApplication
 import bfa.blair.favdish.databinding.FragmentRandomDishBinding
+import bfa.blair.favdish.model.entities.FavDish
 import bfa.blair.favdish.model.entities.RandomDish
+import bfa.blair.favdish.utils.Constants
+import bfa.blair.favdish.viewmodel.FavDishViewModel
+import bfa.blair.favdish.viewmodel.FavDishViewModelFactory
 import bfa.blair.favdish.viewmodel.RandomDishViewModel
 import com.bumptech.glide.Glide
 
@@ -80,15 +88,15 @@ class RandomDishFragment : Fragment() {
 
         _binding!!.tvCategory.text = "Other"
 
-        var ingredient = ""
+        var ingredients = ""
         for(value in recipe.extendedIngredients) {
-            if(ingredient.isEmpty()) {
-                ingredient = value.original
+            ingredients = if(ingredients.isEmpty()) {
+                value.original
             } else {
-                ingredient = ingredient + ", \n" + value.original
+                ingredients + ", \n" + value.original
             }
         }
-        _binding!!.tvIngredients.text = ingredient
+        _binding!!.tvIngredients.text = ingredients
 
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             _binding!!.tvCookingDirection.text = Html.fromHtml(
@@ -101,9 +109,40 @@ class RandomDishFragment : Fragment() {
         }
 
         _binding!!.tvCookingTime.text = resources.getString(
-            R.string.lbl_cooking_time_in_minutes,
+            R.string.lbl_estimate_cooking_time,
             recipe.readyInMinutes.toString()
         )
+
+        _binding!!.ivFavoriteDish.setOnClickListener {
+            val randomDishDetails = FavDish(
+                recipe.image,
+                Constants.DISH_IMAGE_SOURCE_ONLINE,
+                recipe.title,
+                dishType,
+                "Other",
+                ingredients,
+                recipe.readyInMinutes.toString(),
+                recipe.instructions,
+                true
+            )
+
+            val mFavDishViewModel : FavDishViewModel by viewModels {
+                FavDishViewModelFactory((requireActivity().application as FavDishApplication).repository)
+            }
+            mFavDishViewModel.insert(randomDishDetails)
+
+            _binding!!.ivFavoriteDish.setImageDrawable(
+                ContextCompat.getDrawable(
+                    requireActivity(),
+                    R.drawable.ic_favorite_selected
+                )
+            )
+
+            Toast.makeText(requireActivity(), resources.getString(R.string.msg_added_to_favorites),
+                            Toast.LENGTH_SHORT).show()
+        }
+
+
     }
 
     override fun onDestroyView() {
