@@ -13,6 +13,8 @@ class RandomDishFragment : Fragment() {
 
     private var _binding: FragmentRandomDishBinding? = null
 
+    private lateinit var mRandomDishViewModel: RandomDishViewModel
+
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
