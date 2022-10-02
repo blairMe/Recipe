@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/srl_random_dish"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+<ScrollView
     android:id="@+id/rl_dish_detail_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -131,3 +137,4 @@
             tools:text="@string/lbl_estimate_cooking_time" />
     </RelativeLayout>
 </ScrollView>
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
