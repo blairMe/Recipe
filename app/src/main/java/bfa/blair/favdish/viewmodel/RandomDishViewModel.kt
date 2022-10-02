@@ -35,9 +35,9 @@ class RandomDishViewModel : ViewModel() {
                     }
 
                     override fun onError(e: Throwable) {
-                        loadRandomDish.value = true
+                        loadRandomDish.value = false
                         randomDishLoadingError.value = true
-                        e!!.printStackTrace()
+                        e.printStackTrace()
                     }
 
                 })
