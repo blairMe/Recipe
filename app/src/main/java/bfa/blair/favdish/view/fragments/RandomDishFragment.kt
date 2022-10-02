@@ -1,5 +1,6 @@
 package bfa.blair.favdish.view.fragments
 
+import android.app.Dialog
 import android.os.Build
 import android.os.Bundle
 import android.text.Html
@@ -31,6 +32,8 @@ class RandomDishFragment : Fragment() {
 
     private lateinit var mRandomDishViewModel: RandomDishViewModel
 
+    private var _progressDialog : Dialog? = null
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -38,6 +41,20 @@ class RandomDishFragment : Fragment() {
     ): View {
         _binding = FragmentRandomDishBinding.inflate(inflater, container, false)
         return _binding!!.root
+    }
+
+    private fun showCustomProgressDialog() {
+        _progressDialog = Dialog(requireActivity())
+        _progressDialog?.let {
+            it.setContentView(R.layout.dialog_custom_progress)
+            it.show()
+        }
+    }
+
+    private fun hideProgressDialog() {
+        _progressDialog?.let {
+            it.dismiss()
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -54,32 +71,39 @@ class RandomDishFragment : Fragment() {
     }
 
     private fun randomDishViewModelObserver() {
-        mRandomDishViewModel.randomDishRespose.observe(viewLifecycleOwner, Observer { randomDishResponse ->
+        mRandomDishViewModel.randomDishRespose.observe(viewLifecycleOwner) { randomDishResponse ->
             randomDishResponse?.let {
                 Log.i("Random Dish Response", "$randomDishResponse.recipes[0]")
-                if(_binding!!.srlRandomDish.isRefreshing) {
+                if (_binding!!.srlRandomDish.isRefreshing) {
                     _binding!!.srlRandomDish.isRefreshing = false
                 }
                 setRandomDishResponseInUI(randomDishResponse.recipes[0])
             }
-        } )
+        }
 
-        mRandomDishViewModel.randomDishLoadingError.observe(viewLifecycleOwner,
-            Observer { dataError ->
+        mRandomDishViewModel.randomDishLoadingError.observe(viewLifecycleOwner
+        ) { dataError ->
             dataError?.let {
-                if(_binding!!.srlRandomDish.isRefreshing) {
+                if (_binding!!.srlRandomDish.isRefreshing) {
                     _binding!!.srlRandomDish.isRefreshing = false
                 }
                 Log.e("Random dish API Error", "$dataError")
             }
-        } )
+        }
 
-        mRandomDishViewModel.loadRandomDish.observe(viewLifecycleOwner ,
-            Observer { loadRandomDish ->
+        mRandomDishViewModel.loadRandomDish.observe(viewLifecycleOwner
+        ) { loadRandomDish ->
             loadRandomDish?.let {
                 Log.i("Load Random Dish", "$loadRandomDish")
+
+                // Showing the loading dialog
+                if (loadRandomDish && !_binding!!.srlRandomDish.isRefreshing) {
+                    showCustomProgressDialog()
+                } else {
+                    hideProgressDialog()
+                }
             }
-        } )
+        }
     }
 
     private fun setRandomDishResponseInUI(recipe : RandomDish.Recipe) {
