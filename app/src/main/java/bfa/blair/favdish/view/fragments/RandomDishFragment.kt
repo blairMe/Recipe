@@ -200,3 +200,8 @@ class RandomDishFragment : Fragment() {
         _binding = null
     }
 }
+
+
+
+
+
