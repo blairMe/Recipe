@@ -1,10 +1,8 @@
 package bfa.blair.favdish.view.fragments
 
 import android.os.Bundle
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
@@ -13,6 +11,7 @@ import bfa.blair.favdish.R
 import bfa.blair.favdish.application.FavDishApplication
 import bfa.blair.favdish.databinding.FragmentDishDetailsBinding
 import bfa.blair.favdish.model.database.FavDishRepository
+import bfa.blair.favdish.model.entities.FavDish
 import bfa.blair.favdish.viewmodel.FavDishViewModel
 import bfa.blair.favdish.viewmodel.FavDishViewModelFactory
 import com.bumptech.glide.Glide
@@ -24,6 +23,8 @@ class DishDetailsFragment : Fragment() {
 
     private var mBinding: FragmentDishDetailsBinding? = null
 
+    private var mFavDishDetails : FavDish? = null
+
     private val mFavDishViewModel : FavDishViewModel by viewModels {
         FavDishViewModelFactory((requireActivity().application as FavDishApplication).repository)
     }
@@ -31,6 +32,21 @@ class DishDetailsFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        setHasOptionsMenu(true)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_share, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return super.onOptionsItemSelected(item)
+        when(item.itemId) {
+            R.menu.menu_share -> {
+
+            }
+        }
     }
 
     override fun onCreateView(
@@ -45,6 +61,9 @@ class DishDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val args: DishDetailsFragmentArgs by navArgs()
+
+        mFavDishDetails = args.dishDetails
+
         args.let {
             try {
                 Glide.with(requireActivity())
