@@ -37,6 +37,7 @@ class MainActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(mNavController, appBarConfiguration)
         navView.setupWithNavController(mNavController)
+
     }
 
     // Actionbar back button
