@@ -71,7 +71,6 @@ class AddUpdateDishActivity : AppCompatActivity(), View.OnClickListener {
         setContentView(mBinding.root)
 
 
-
         if(intent.hasExtra(Constants.EXTRA_DISH_DETAILS)) {
              mFavDishDetails = intent.getParcelableExtra(Constants.EXTRA_DISH_DETAILS)
         }
