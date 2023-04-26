@@ -96,8 +96,6 @@ class AddUpdateDishActivity : AppCompatActivity(), View.OnClickListener {
             }
         }
 
-
-
         mBinding.ivAddDishImage.setOnClickListener(this)
 
         mBinding.etType.setOnClickListener(this)
